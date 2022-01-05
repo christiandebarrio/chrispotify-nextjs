@@ -9,6 +9,8 @@ import {
 } from "@heroicons/react/outline";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { playlistIdState } from "../atoms/playlistAtom";
 import { useSpotify } from "../hooks/useSpotify";
 
 export const Sidebar = () => {
@@ -17,6 +19,7 @@ export const Sidebar = () => {
   const [playlists, setPlaylists] = useState<
     SpotifyApi.PlaylistObjectSimplified[]
   >([]);
+  const setPlaylistId = useSetRecoilState(playlistIdState);
 
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
@@ -29,7 +32,7 @@ export const Sidebar = () => {
   const handleLogout = () => signOut();
 
   return (
-    <aside className="text-gray-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll h-screen">
+    <aside className="text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900 overflow-y-scroll h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex">
       <div className="space-y-4">
         <button
           onClick={handleLogout}
@@ -69,7 +72,11 @@ export const Sidebar = () => {
         <hr className="border-t-[0.1px] border-gray-900" />
 
         {playlists.map((playlist) => (
-          <p className="cursor-pointer hover:text-white" key={playlist.id}>
+          <p
+            className="cursor-pointer hover:text-white"
+            onClick={() => setPlaylistId(playlist.id)}
+            key={playlist.id}
+          >
             {playlist.name}
           </p>
         ))}
