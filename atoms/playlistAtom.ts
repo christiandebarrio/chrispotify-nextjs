@@ -5,9 +5,7 @@ export const playlistIdState = atom({
   default: "37i9dQZF1EIVtoYONzahWN",
 });
 
-export const playlistState = atom<
-  undefined | SpotifyApi.PlaylistObjectSimplified
->({
+export const playlistState = atom<undefined | SpotifyApi.PlaylistObjectFull>({
   key: "playlistState",
   default: undefined,
 });

@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { playlistIdState, playlistState } from "../atoms/playlistAtom";
 import { useSpotify } from "../hooks/useSpotify";
 import { Songs } from "./Songs";
+import Image from "next/image";
 
 const COLORS = [
   "from-blue-500",
@@ -40,13 +41,15 @@ export const Center = () => {
   }, [playlistId, spotifyApi, setPlaylist]);
 
   return (
-    <div className="flex-grow text-white">
+    <div className="flex-grow text-white h-screen overflow-y-scroll">
       <header className="absolute top-5 right-5">
         <div className="flex items-center bg-black space-x-3 opacity-90 hover:opacity-80 cursor-pointer rounded-full p-1 pr-2">
-          <img
+          <Image
             className="rounded-full w-10 h-10"
-            src={session?.user?.image}
-            alt=""
+            src={session?.user?.image ?? ""}
+            width={40}
+            height={40}
+            alt="user abatar"
           />
           <h2>{session?.user?.name}</h2>
           <ChevronDownIcon className="h-5 w-5" />
@@ -58,8 +61,10 @@ export const Center = () => {
       >
         <img
           className="h-44 w-44 shadow-2xl"
-          src={playlist?.images?.[0]?.url}
-          alt=""
+          src={playlist?.images?.[0]?.url ?? ""}
+          // width={704}
+          // height={704}
+          alt="playlist image"
         />
         <div>
           <p>PLAYLIST</p>
